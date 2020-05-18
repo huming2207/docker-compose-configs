@@ -1,0 +1,70 @@
+version: '3.3'
+
+services:
+  traefik:
+    image: "traefik:v2.2"
+    container_name: "traefik"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=${LE_ACME_EMAIL}"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - le:/letsencrypt
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  db:
+    container_name: db
+    image: mariadb:latest
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - default
+    restart: always
+    labels:
+      - "traefik.enable=false"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER_NAME}
+      MYSQL_PASSWORD: ${DB_USER_PASSWORD}
+
+  wp:
+    container_name: wp
+    depends_on:
+      - db
+    image: bitnami/wordpress-nginx:latest
+    volumes:
+      - wp-data:/bitnami/wordpress
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./phpinfo.php:/var/www/html/php-info.php
+    networks:
+      - default
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_default"
+      - "traefik.http.routers.wp.rule=Host(`${HOSTNAME_MAIN}`, `${HOSTNAME_ALT}`)"
+      - "traefik.http.routers.wp.entrypoints=websecure"
+      - "traefik.http.routers.wp.tls.certresolver=myresolver"
+      - "traefik.http.services.wp.loadbalancer.server.port=80"
+    environment:
+      MARIADB_HOST: db
+      MARIADB_PORT_NUMBER: 3306
+      WORDPRESS_DATABASE_USER: ${WP_DB_USER_NAME}
+      WORDPRESS_DATABASE_NAME: ${WP_DB_NAME}
+      WORDPRESS_DATABASE_PASSWORD: ${WP_DB_PASSWORD}
+
+volumes:
+  db-data: {}
+  wp-data: {}
+  le: {}
+
