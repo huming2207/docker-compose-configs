@@ -45,7 +45,7 @@ services:
     volumes:
       - wp:/var/www/html
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-      - ./phpinfo.php:/var/www/html/phpinfo.php
+      - ./phpinfo.php:/var/www/html/php-info.php
     networks:
       - default
     restart: always
