@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  minio-dev:
+    image: minio/minio:RELEASE.2020-05-01T22-19-14Z
+    restart: always
+    volumes:
+      - minio-data:/data
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: foobar123456
+
+volumes:
+  minio-data: {}
