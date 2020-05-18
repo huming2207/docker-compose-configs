@@ -19,7 +19,6 @@ services:
       - "443:443"
     volumes:
       - le:/letsencrypt
-      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
   db:
@@ -45,6 +44,7 @@ services:
     image: wordpress:latest
     volumes:
       - wp:/var/www/html
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - default
     restart: always
