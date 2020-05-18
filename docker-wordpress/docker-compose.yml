@@ -35,7 +35,7 @@ services:
       - "traefik.enable=false"
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_USER}
+      MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER_NAME}
       MYSQL_PASSWORD: ${DB_USER_PASSWORD}
 
