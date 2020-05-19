@@ -5,7 +5,8 @@ services:
     image: "traefik:v2.2"
     container_name: "traefik"
     command:
-      - "--api.insecure=true"
+      - "--api.insecure=false"
+      - "--api.dashboard=false"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
