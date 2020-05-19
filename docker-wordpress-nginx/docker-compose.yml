@@ -46,6 +46,7 @@ services:
       - wp-data:/bitnami/wordpress
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ./phpinfo.php:/var/www/html/php-info.php
+      - './wordpress-server-block.conf:/opt/bitnami/nginx/conf/server_blocks/wordpress-server-block.conf:ro'
     networks:
       - default
     restart: always
@@ -62,6 +63,13 @@ services:
       WORDPRESS_DATABASE_USER: ${WP_DB_USER_NAME}
       WORDPRESS_DATABASE_NAME: ${WP_DB_NAME}
       WORDPRESS_DATABASE_PASSWORD: ${WP_DB_PASSWORD}
+      WORDPRESS_FIRST_NAME: ${WP_FIRSTNAME}
+      WORDPRESS_LAST_NAME: ${WP_LASTNAME}
+      WORDPRESS_BLOG_NAME: ${WP_BLOGNAME}
+      WORDPRESS_USERNAME: ${WP_USERNAME}
+      WORDPRESS_PASSWORD: ${WP_PASSWORD}
+      WORDPRESS_EMAIL: ${WP_EMAIL}
+      WORDPRESS_SCHEME: http
 
 volumes:
   db-data: {}
