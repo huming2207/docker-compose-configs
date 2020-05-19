@@ -12,6 +12,11 @@ Referenced from official MongoDB Docker README.
 
 ## Docker-wordpress
 
-Wordpress + MariaDB with Traefik, live on [jacksonhu.com](jacksonhu.com)
+Wordpress + MariaDB with Traefik
 
 Referenced from [harveyconnor/wordpress-traefikv2](https://github.com/harveyconnor/wordpress-traefikv2) and [this blog post](https://ip-life.net/docker-wordpress-traefik-2/).
+
+## Docker-wordpress-nginx
+
+Wordpress + MariaDB + PHP-FPM + Nginx, went on live at [jacksonhu.com](jacksonhu.com)
+
