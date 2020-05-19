@@ -69,7 +69,7 @@ services:
       WORDPRESS_USERNAME: ${WP_USERNAME}
       WORDPRESS_PASSWORD: ${WP_PASSWORD}
       WORDPRESS_EMAIL: ${WP_EMAIL}
-      WORDPRESS_SCHEME: http
+      WORDPRESS_SCHEME: https
 
 volumes:
   db-data: {}
