@@ -1,0 +1,19 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+
+  mongood:
+    image: renzholy/mongood
+    restart: always
+    environment: 
+      - MONGO_URL="mongodb://localhost:27017"
+    ports:
+      - 8081:3000
+      
