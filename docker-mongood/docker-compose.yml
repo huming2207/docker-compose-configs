@@ -13,7 +13,7 @@ services:
     image: renzholy/mongood
     restart: always
     environment: 
-      - MONGO_URL="mongodb://localhost:27017"
+      - MONGO_URL=mongodb://mongo:27017
     ports:
       - 8081:3000
       
