@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   traefik:
-    image: "traefik:v2.2"
+    image: "traefik:v2.4"
     container_name: "traefik"
     command:
       - "--api.insecure=false"
@@ -42,7 +42,7 @@ services:
     container_name: wp
     depends_on:
       - db
-    image: wordpress:php7.2
+    image: wordpress:php7.4-fpm
     volumes:
       - wp:/var/www/html
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
